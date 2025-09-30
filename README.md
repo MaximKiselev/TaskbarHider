@@ -12,34 +12,12 @@
 - Work-area expansion (reclaiming bottom space) is applied only when no third‑party taskbar managers are detected.
 - Uses continuous enforcement thread to prevent re-appearance.
 - Reactivates blocking after each hide via a short Show→Hide cycle.
-"""
 
 ## Installation
-
-### Prerequisites
-- Windows 11
-- Python 3.6+ (for source code)
-- Administrator privileges (recommended)
-
-### Quick Start
-1. **Download the standalone EXE**:
-   ```
-   TaskbarHider.exe (8.2 MB)
-   ```
-
-2. **Or run from source**:
-   ```bash
-   python final_solution_explained.py
-   ```
+Download the standalone [exe](https://github.com/MaximKiselev/TaskbarHider/releases/download/v0.0.3/TaskbarHiderPro.exe)
 
 ### Building from Source
 ```bash
-# Install PyInstaller
-pip install pyinstaller
-
-# Build standalone EXE
-pyinstaller --onefile --noconsole --name="TaskbarHider" final_solution_explained.py
-
 # Build with MinGW
 g++ -std=c++20 -O2 -municode -mwindows final_solution_cpp.cpp -o TaskbarHiderPro.exe \
     -static-libstdc++ -static-libgcc -static \
@@ -53,16 +31,6 @@ g++ -std=c++20 -O2 -municode -mwindows final_solution_cpp.cpp -o TaskbarHiderPro
 ### Controls
 - **Win Key**: Show taskbar and Start menu for 10 seconds
 - **Alt + `**: Exit and restore system
-- **Ctrl + C**: Emergency exit
-
-### Execution
-```bash
-# Python version
-python final_solution_explained.py
-
-# Standalone EXE
-TaskbarHider.exe
-```
 
 The program runs immediately without confirmation prompts and provides real-time status updates.
 
