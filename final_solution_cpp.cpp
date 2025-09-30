@@ -1,7 +1,9 @@
 // TaskbarHider Pro (Windows 11) — headless GUI (no console/no tray/no logs)
+// Вариант A: при повторном Win — скрытие без «реактивации» (Show→Hide) чтобы убрать «миг».
+//
 // - Скрывает только системную панель задач Explorer и блокирует появление по наведению
 // - Сторонние панели (YASB и пр.) не трогает
-// - Win: временный показ на 10 сек (повторное Win — мгновенно скрыть)
+// - Win: временный показ на 10 сек (повторное Win — мгновенно скрыть без мигания)
 // - Alt+` — выход с восстановлением
 // - Поток «дожима» скрытия
 // - Расширение рабочей области только при отсутствии сторонних менеджеров
@@ -180,6 +182,9 @@ static void hide_system_taskbars(bool reactivate = true) {
                 ShowWindow(hwnd, SW_HIDE);
                 Sleep(50);
             }
+        } else {
+            // Без «реактивации»: просто скрываем
+            ShowWindow(hwnd, SW_HIDE);
         }
         force_hide_hwnd(hwnd);
     }
@@ -262,6 +267,7 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int) {
         bool win_down = key_down(VK_LWIN) || key_down(VK_RWIN);
         if (win_down && !win_was_down) {
             if (!g_panel_temp_visible.load()) {
+                // Показ на 10 сек
                 g_panel_temp_visible = true;
                 g_desired_hidden = false;
                 show_system_taskbars();
@@ -269,21 +275,22 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int) {
                     restore_work_area();
                 }
                 g_show_deadline_ms = t + 10000ULL;
-                Sleep(120);
+                Sleep(120); // debounce
             } else {
+                // Раннее скрытие без «мига»: без реактивации
                 close_start_menu();
                 g_desired_hidden = true;
                 g_panel_temp_visible = false;
-                hide_system_taskbars(true);
+                hide_system_taskbars(false); // ключевое изменение — без Show→Hide
                 if (!g_has_taskbar_managers && g_third_party_taskbars.empty()) {
                     set_fullscreen_work_area();
                 }
-                Sleep(120);
+                Sleep(60);
             }
         }
         win_was_down = win_down;
 
-        // Автоскрытие по таймауту
+        // Автоскрытие по таймауту (с реактивацией — как в оригинале)
         if (g_panel_temp_visible.load() && t >= g_show_deadline_ms.load()) {
             close_start_menu();
             g_desired_hidden = true;
