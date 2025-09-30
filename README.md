@@ -39,6 +39,13 @@ pip install pyinstaller
 
 # Build standalone EXE
 pyinstaller --onefile --noconsole --name="TaskbarHider" final_solution_explained.py
+
+# Build with MinGW
+g++ -std=c++20 -O2 -municode -mwindows final_solution_cpp.cpp -o TaskbarHiderPro.exe \
+    -static-libstdc++ -static-libgcc -static \
+    -luser32 -lshell32 -lkernel32 -lpthread
+
+
 ```
 
 ## Usage
