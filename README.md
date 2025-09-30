@@ -6,7 +6,7 @@
 - Keep third-party taskbar managers (e.g., YASB Reborn) working — hide ONLY Explorer's taskbar
 - On Win key press, temporarily show the taskbar for 10 seconds (press Win again to hide immediately)
 - Restore everything safely on exit (Alt+`)
-- Minimal dependencies (ctypes only), no admin required (recommended but not mandatory)
+- CPU load 0%, memory load approximately 0.9 MB
 
 # Notes:
 - Work-area expansion (reclaiming bottom space) is applied only when no third‑party taskbar managers are detected.
