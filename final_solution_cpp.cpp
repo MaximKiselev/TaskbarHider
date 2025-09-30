@@ -1,10 +1,10 @@
 // TaskbarHider Pro (Windows 11) — headless GUI (no console/no tray/no logs)
-// - Скрывает только системную панель задач Explorer и блокирует появление по наведению
-// - Сторонние панели (YASB и пр.) не трогает
-// - Win: временный показ на 10 сек (повторное Win — мгновенно скрыть без мигания)
-// - Alt+` — выход с восстановлением
-// - Поток «дожима» скрытия
-// - Расширение рабочей области только при отсутствии сторонних менеджеров
+// - Hides only the Explorer system taskbar and prevents it from appearing on hover
+// - Does not affect third-party taskbars (YASB, etc.)
+// - Win: temporarily show for 10 seconds (press Win again to instantly hide without blinking)
+// - Alt+` — exit with restore
+// - "Finished" hiding thread
+// - Expands the workspace only when third-party managers are not present
 
 #ifndef UNICODE
 #define UNICODE
